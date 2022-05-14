@@ -1,0 +1,117 @@
+import { exec } from "child_process";
+import { CustomActionFunction } from "plop";
+import { mkdir } from "fs/promises";
+
+export const mkdirAction: CustomActionFunction = (answers, config, plop) => {
+	const { path } = config;
+	return mkdir(plop.renderString(path, answers)).then(() => path);
+};
+
+export const yarnInstall: CustomActionFunction = (answers, config, plop) => {
+	const { packageName, dev, path } = config;
+	const packages = Array.isArray(packageName)
+		? packageName.join(" ")
+		: packageName;
+	const command = dev ? "yarn add -D" : "yarn add";
+	return new Promise((resolve, reject) => {
+		exec(
+			`${command} ${packages}`,
+			{ cwd: plop.renderString(path, answers) },
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(stderr);
+				}
+				resolve(stdout);
+			}
+		);
+	});
+};
+
+export const yarnInit: CustomActionFunction = (answers, config, plop) => {
+	const { path } = config;
+	return new Promise((resolve, reject) => {
+		exec(
+			`yarn init -y`,
+			{ cwd: plop.renderString(path, answers) },
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(stderr);
+				}
+				resolve(stdout);
+			}
+		);
+	});
+};
+
+export const npmInstall: CustomActionFunction = (answers, config, plop) => {
+	const { packageName, dev, path } = config;
+	const packages = Array.isArray(packageName)
+		? packageName.join(" ")
+		: packageName;
+	const command = dev ? "npm intall --save-dev" : "npm intall";
+	return new Promise((resolve, reject) => {
+		exec(
+			`${command} ${packages}`,
+			{ cwd: plop.renderString(path, answers) },
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(stderr);
+				}
+				resolve(stdout);
+			}
+		);
+	});
+};
+
+export const npmInit: CustomActionFunction = (answers, config, plop) => {
+	const { path } = config;
+	return new Promise((resolve, reject) => {
+		exec(
+			`npm init -y`,
+			{ cwd: plop.renderString(path, answers) },
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(stderr);
+				}
+				resolve(stdout);
+			}
+		);
+	});
+};
+
+export const gitInit: CustomActionFunction = (answers, config, plop) => {
+	const { path } = config;
+	return new Promise((resolve, reject) => {
+		let output = "";
+		exec(
+			`git init`,
+			{ cwd: plop.renderString(path, answers) },
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(stderr);
+				}
+				output += stdout;
+			}
+		);
+		exec(
+			`git add .`,
+			{ cwd: plop.renderString(path, answers) },
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(stderr);
+				}
+				output += "\n" + stdout;
+			}
+		);
+		exec(
+			`git commit -m "Initial commit"`,
+			{ cwd: plop.renderString(path, answers) },
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(stderr);
+				}
+				resolve(output + "\n" + stdout);
+			}
+		);
+	});
+};
