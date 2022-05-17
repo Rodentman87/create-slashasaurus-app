@@ -81,28 +81,34 @@ export const npmInit: CustomActionFunction = (answers, config, plop) => {
 
 export const gitInit: CustomActionFunction = (answers, config, plop) => {
 	const { path } = config;
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
 		let output = "";
-		exec(
-			`git init`,
-			{ cwd: plop.renderString(path, answers) },
-			(error, stdout, stderr) => {
-				if (error) {
-					reject(stderr);
+		await new Promise((resolve) => {
+			exec(
+				`git init`,
+				{ cwd: plop.renderString(path, answers) },
+				(error, stdout, stderr) => {
+					if (error) {
+						reject(stderr);
+					}
+					output += stdout;
+					resolve(null);
 				}
-				output += stdout;
-			}
-		);
-		exec(
-			`git add .`,
-			{ cwd: plop.renderString(path, answers) },
-			(error, stdout, stderr) => {
-				if (error) {
-					reject(stderr);
+			);
+		});
+		await new Promise((resolve) => {
+			exec(
+				`git add .`,
+				{ cwd: plop.renderString(path, answers) },
+				(error, stdout, stderr) => {
+					if (error) {
+						reject(stderr);
+					}
+					output += stdout;
+					resolve(null);
 				}
-				output += "\n" + stdout;
-			}
-		);
+			);
+		});
 		exec(
 			`git commit -m "Initial commit"`,
 			{ cwd: plop.renderString(path, answers) },
