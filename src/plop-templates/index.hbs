@@ -16,7 +16,8 @@ client.once('ready', () => {
 	console.log(`Client ready and logged in as ${client.user?.tag}`);
 	client.registerCommandsFrom(
 		path.join(__dirname, 'commands'),
-		process.env.NODE_ENV === 'development' ? 'dev' : 'global'
+		true,
+		process.env.TOKEN!
 	);
 });
 
