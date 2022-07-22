@@ -28,11 +28,6 @@ export default function (plop: NodePlopAPI) {
 				message: "Which package manager do you want to use?",
 				choices: ["yarn", "npm"],
 			},
-			{
-				type: "input",
-				name: "devServerId",
-				message: "What is the id of your test server?",
-			},
 		],
 		actions: (data) => {
 			if (!data || !data.manager) return [];
@@ -55,7 +50,7 @@ export default function (plop: NodePlopAPI) {
 					// @ts-expect-error weird type stuff
 					type: "yarnInstall",
 					path: `${process.cwd()}/{{name}}/`,
-					packageName: ["discord.js@latest", "slashasaurus@latest", "dotenv"],
+					packageName: ["discord.js@13.x.x", "slashasaurus@latest", "dotenv"],
 					dev: false,
 				});
 				actions.push({
@@ -70,7 +65,7 @@ export default function (plop: NodePlopAPI) {
 					// @ts-expect-error weird type stuff
 					type: "npmInstall",
 					path: `${process.cwd()}/{{name}}/`,
-					packageName: ["discord.js@latest", "slashasaurus@latest", "dotenv"],
+					packageName: ["discord.js@13.x.x", "slashasaurus@latest", "dotenv"],
 					dev: false,
 				});
 				actions.push({
