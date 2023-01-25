@@ -48,7 +48,7 @@ export const npmInstall: CustomActionFunction = (answers, config, plop) => {
 	const packages = Array.isArray(packageName)
 		? packageName.join(" ")
 		: packageName;
-	const command = dev ? "npm intall --save-dev" : "npm intall";
+	const command = dev ? "npm install --save-dev" : "npm install";
 	return new Promise((resolve, reject) => {
 		exec(
 			`${command} ${packages}`,
