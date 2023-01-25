@@ -50,7 +50,7 @@ export default function (plop: NodePlopAPI) {
 					// @ts-expect-error weird type stuff
 					type: "yarnInstall",
 					path: `${process.cwd()}/{{name}}/`,
-					packageName: ["discord.js@13.x.x", "slashasaurus@latest", "dotenv"],
+					packageName: ["discord.js@14.x.x", "slashasaurus@latest", "dotenv"],
 					dev: false,
 				});
 				actions.push({
@@ -65,7 +65,7 @@ export default function (plop: NodePlopAPI) {
 					// @ts-expect-error weird type stuff
 					type: "npmInstall",
 					path: `${process.cwd()}/{{name}}/`,
-					packageName: ["discord.js@13.x.x", "slashasaurus@latest", "dotenv"],
+					packageName: ["discord.js@14.x.x", "slashasaurus@latest", "dotenv"],
 					dev: false,
 				});
 				actions.push({
